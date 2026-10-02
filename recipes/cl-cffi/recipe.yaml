@@ -19,8 +19,8 @@ outputs:
       script:
         file: build.sh
         env:
-          ASD_FILES: "cffi.asd cffi-uffi-compat.asd"
-          SRC_DIRS: "src uffi-compat"
+          ASD_FILES: "cffi.asd cffi-examples.asd cffi-toolchain.asd  cffi-uffi-compat.asd"
+          SRC_DIRS: "src examples toolchain uffi-compat"
     requirements:
       build:
         - if: build_platform == "win-64"
@@ -36,6 +36,7 @@ outputs:
           - sbcl --no-userinit --non-interactive
               --eval "(require :asdf)"
               --eval "(asdf:load-system :cffi)"
+              --eval "(asdf:load-system :cffi-examples)"
 
   - package:
       name: cl-cffi-grovel
@@ -43,8 +44,8 @@ outputs:
       script:
         file: build.sh
         env:
-          ASD_FILES: "cffi-grovel.asd cffi-toolchain.asd cffi-libffi.asd cffi-tests.asd cffi-examples.asd"
-          SRC_DIRS: "grovel toolchain libffi tests examples"
+          ASD_FILES: "cffi-grovel.asd cffi-libffi.asd cffi-tests.asd"
+          SRC_DIRS: "grovel libffi tests"
     requirements:
       build:
         # We need this for bash and other utils
