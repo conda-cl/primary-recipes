@@ -1,10 +1,10 @@
 package:
   name: styled-strings
-  version: "0.0.0.2026.09.12"
+  version: "0.0.0.2026.09.26"
 
 source:
   git: https://codeberg.org/digikar/styled-strings.git
-  rev: bee2e4ca32b02eefa2c6689e6ae393f0629e184d
+  rev: f2918fb08f2d87a7d84d67a462c8203478de8cd5
   submodules: false
 
 build:
