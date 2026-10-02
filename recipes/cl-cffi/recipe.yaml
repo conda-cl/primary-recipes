@@ -1,4 +1,4 @@
-package:
+recipe:
   name: cl-cffi
   version: "0.24.1.2026.08.21"
 
@@ -8,45 +8,76 @@ source:
   submodules: false
 
 build:
-  number: 2
+  number: 3
   script: build.sh
 
-requirements:
-  build:
-    # We need this for bash and other utils
-    - if: win
-      then: m2-base
-  host:
-    - if: win
-      then: libffi
-  run:
-    - sbcl
-    - cl-asdf
-    - alexandria
-    - trivial-features
-    - cl-babel
-    - if: win
-      then: gcc_win-64
-      else: ${{ compiler('c') }}
-    - libffi
-
-tests:
-  - script:
-      - sbcl --no-userinit --non-interactive
-          --eval "(require :asdf)"
-          --eval "(asdf:load-system :trivial-features-tests)"
-          --eval "(asdf:test-system :trivial-features)"
-          --eval "(handler-bind ((style-warning (function muffle-warning)))
-                  (asdf:load-system :cffi-toolchain)
-                  (when (member :win cl:*features*)
-                    (setf cffi-toolchain:*cc* \"x86_64-w64-mingw32-gcc\"))
-                  (asdf:load-system :cffi-tests)
-                  (asdf:test-system :cffi))"
-
+outputs:
+  - package:
+      name: cl-cffi
+    build:
+      noarch: generic
+      script:
+        file: build.sh
+        env:
+          ASD_FILES: "cffi.asd cffi-uffi-compat.asd"
+          SRC_DIRS: "src uffi-compat"
     requirements:
+      build:
+        - if: build_platform == "win-64"
+          then: m2-base
       run:
-        - cl-rt
-        - bordeaux-threads
+        - sbcl
+        - cl-asdf
+        - alexandria
+        - trivial-features
+        - cl-babel
+    tests:
+      - script:
+          - sbcl --no-userinit --non-interactive
+              --eval "(require :asdf)"
+              --eval "(asdf:load-system :cffi)"
+
+  - package:
+      name: cl-cffi-grovel
+    build:
+      script:
+        file: build.sh
+        env:
+          ASD_FILES: "cffi-grovel.asd cffi-toolchain.asd cffi-libffi.asd cffi-tests.asd cffi-examples.asd"
+          SRC_DIRS: "grovel toolchain libffi tests examples"
+    requirements:
+      build:
+        # We need this for bash and other utils
+        - if: win
+          then: m2-base
+      host:
+        - if: win
+          then: libffi
+      run:
+        - ${{ pin_subpackage('cl-cffi', exact=true) }}
+        - alexandria
+        - trivial-features
+        - if: win
+          then: gcc_win-64
+          else: ${{ compiler('c') }}
+        - if: not(win)
+          then: libffi
+    tests:
+      - script:
+          - sbcl --no-userinit --non-interactive
+              --eval "(require :asdf)"
+              --eval "(asdf:load-system :trivial-features-tests)"
+              --eval "(asdf:test-system :trivial-features)"
+              --eval "(handler-bind ((style-warning (function muffle-warning)))
+                        (asdf:load-system :cffi-toolchain)
+                        (when (member :win cl:*features*)
+                          (setf cffi-toolchain:*cc* \"x86_64-w64-mingw32-gcc\"))
+                        (asdf:load-system :cffi-tests)
+                        (asdf:test-system :cffi))"
+        requirements:
+          run:
+            - cl-rt
+            - bordeaux-threads
 
 about:
   repository: https://github.com/cffi/cffi
