@@ -7,7 +7,7 @@ TEST_SCRIPT="./integrations/test-integrations.sh"
 GROUP_FILE=""
 PACKAGES=()
 
-# Usage: ./build.sh [-g integrations/numericals.txt] pkg-a pkg-b pkg-c
+# Usage: ./build-test-recipe.sh [-g integrations/numericals.txt] pkg-a pkg-b pkg-c
 #
 # Example: ash recipe-test-and-publish.sh -g integrations/mgl-pax cl-autoload named-readtables cl-pythonic-string-reader cl-dref mgl-pax cl-try
 #
@@ -45,11 +45,3 @@ done
 if [[ -n "$GROUP_FILE" ]]; then
     "$TEST_SCRIPT" "$OUT" "$GROUP_FILE" "${PACKAGES[@]}"
 fi
-
-# 3. Upload
-for pkg in "${PACKAGES[@]}"; do
-    (
-        cd "recipes/$pkg"
-        rattler-build publish recipe.yaml --to "$CHANNEL_URL" --allow-symlinks-on-windows
-    )
-done
