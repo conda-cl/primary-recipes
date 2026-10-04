@@ -8,11 +8,12 @@ source:
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script:
     interpreter: bash
     content: |
-      mkdir -p "$PREFIX/bin"
+      mkdir -p "$PREFIX/bin" "$PREFIX/Scripts"
       cat > "$PREFIX/bin/cl-isocline-repl" <<'EOF'
       #!/usr/bin/env bash
 
@@ -25,6 +26,21 @@ build:
         --eval '(uiop:quit)'
       EOF
       chmod +x "$PREFIX/bin/cl-isocline-repl"
+
+      # --- Windows launcher ---
+      cat > "$PREFIX/Scripts/cl-isocline-repl.bat" <<'EOF'
+      @echo off
+      setlocal
+      sbcl --no-sysinit --no-userinit %* ^
+        --eval "(require :asdf)" ^
+        --eval "(asdf:load-system :isocline-repl)" ^
+        --eval "(isocline-repl:main)" ^
+        --eval "(uiop:quit)"
+      exit /b %ERRORLEVEL%
+      EOF
+      # .bat files should use CRLF line endings
+      sed -i.bak 's/$/\r/' "$PREFIX/Scripts/cl-isocline-repl.bat"
+      rm -f "$PREFIX/Scripts/cl-isocline-repl.bat.bak"
 
 requirements:
   run:
