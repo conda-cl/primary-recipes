@@ -9,13 +9,13 @@ Recipes for prefix.dev Common Lisp channel
 >
 > However, this has been checked, modified and adapted by me. I hope anyone familiar with bash can go over it in a matter of a minute or few.
 
-Channel at: https://prefix.dev/channels/@digikar/common-lisp
+Channel at: https://prefix.dev/channels/@common-lisp/common-lisp
 
 Installation: https://pixi.prefix.dev/latest/installation/
 
 Add package: 
 
-    pixi workspace channel add --prepend https://prefix.dev/conda-forge https://prefix.dev/digikar/common-lisp
+    pixi workspace channel add --prepend https://prefix.dev/conda-forge https://prefix.dev/common-lisp/common-lisp
 
 Install:
 

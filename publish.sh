@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-CHANNEL_URL="https://prefix.dev/digikar/common-lisp"
+CHANNEL_URL="https://prefix.dev/common-lisp/common-lisp"
 PACKAGES="$@"
 
 # Usage: ./publish.sh pkg-a pkg-b pkg-c
