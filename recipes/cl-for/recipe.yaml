@@ -1,0 +1,41 @@
+package:
+  name: cl-for
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/for.git
+  rev: cbb82c449a3d13ce8b9f803ca5a5676c75b61d41
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/for"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - documentation-utils
+    - lambda-fiddle
+    - form-fiddle
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "for")'
+          --eval '(asdf:test-system "for")'
+
+about:
+  repository: https://codeberg.org/shinmera/for.git
+  documentation: https://shinmera.com/docs/for/
+  license: Zlib
+  summary: An extensible iteration macro library for Common Lisp.
+  description: |
+    For is a library for an extensible iteration macro. It allows you to write concise looping constructs similar to `loop` and `iterate`. Unlike loop however it is extensible and sensible, and unlike iterate it does not require code-walking and is easier to extend.
+
+    See the [documentation](https://shinmera.com/docs/for/) for more details.

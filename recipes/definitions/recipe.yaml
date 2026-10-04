@@ -1,0 +1,38 @@
+package:
+  name: definitions
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/definitions.git
+  rev: 869796051d97bf67779f192733d52714929b48f1
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/definitions"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - documentation-utils
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "definitions")'
+
+about:
+  repository: https://codeberg.org/shinmera/definitions.git
+  documentation: https://shinmera.com/docs/definitions/
+  license: Zlib
+  summary: General definitions reflection library for common lisp
+  description: |
+    This system implements a general definitions introspection library. It gives you the ability to retrieve definitions or bindings associated with designators such as symbols, packages, and names in general. For instance, it allows you to retrieve all function, type, variable, method, etc. definitions of a symbol.
+
+    For more information, see the [documentation](https://shinmera.com/docs/definitions/).

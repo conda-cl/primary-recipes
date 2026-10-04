@@ -1,0 +1,38 @@
+package:
+  name: lambda-fiddle
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/lambda-fiddle
+  rev: 064189b780eed4df0e143134a12c6b486876f17e
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/lambda-fiddle"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "lambda-fiddle")'
+          --eval '(asdf:test-system "lambda-fiddle")'
+
+about:
+  repository: https://codeberg.org/shinmera/lambda-fiddle
+  documentation: https://shinmera.com/docs/lambda-fiddle/
+  license: Zlib
+  summary: Lambda-fiddle is a collection of utilities to process lambda-lists for Common Lisp.
+  description: |
+    Lambda-fiddle is a collection of utilities to process lambda-lists. Mostly useful in contexts where you want a macro that uses lambda-lists in some fashion but need more precise processing.
+
+    See the [documentation](https://shinmera.com/docs/lambda-fiddle/) for more details.

@@ -1,0 +1,48 @@
+package:
+  name: com.inuoe.jzon
+  version: "0.0.0.2026.03.03"
+
+source:
+  git: https://github.com/Zulu-Inuoe/jzon
+  rev: 18959fbef1af5dde022f45f91c24f94e99e6abcb
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/jzon"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - closer-mop
+    - flexi-streams
+    - float-features
+    - trivial-gray-streams
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "com.inuoe.jzon")'
+          --eval '(asdf:test-system "com.inuoe.jzon")'
+    requirements:
+      run:
+        - alexandria
+        - fiveam
+
+about:
+  repository: https://github.com/Zulu-Inuoe/jzon
+  documentation: https://github.com/Zulu-Inuoe/jzon/blob/develop/README.md
+  license: MIT
+  summary: A correct and safe(er) JSON RFC 8259 reader/writer with sane defaults for Common Lisp.
+  description: |
+    A correct and safe(er) JSON [RFC 8259](https://tools.ietf.org/html/rfc8259) reader/writer with sane defaults.
+
+    Please see the section [Motivation and Features](https://github.com/Zulu-Inuoe/jzon#motivation-and-features) for a set of motivations driving jzon and why you should consider it over the other hundred options available for JSON in CL.
+
+    See the [documentation](https://github.com/Zulu-Inuoe/jzon/blob/develop/README.md) for more details.

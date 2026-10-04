@@ -1,0 +1,47 @@
+package:
+  name: cl-unit2
+  version: "0.0.0.2025.12.03"
+
+source:
+  git: https://codeberg.org/cage/clunit2/
+  rev: 9bbacba383f69a76580d899d1e3d8d300aa639d5
+  submodules: false
+
+build:
+  noarch: generic
+  script: build.sh
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "clunit2")'
+          --eval '(asdf:test-system "clunit2")'
+
+about:
+  repository: https://codeberg.org/cage/clunit2/
+  documentation: https://codeberg.org/cage/clunit2/src/branch/master/README.org
+  license: MIT
+  summary: Common Lisp Unit Testing Framework, fork of clunit. 
+  description: |
+    CLUnit is a Common Lisp unit testing framework. It is designed to be easy to use so that you can quickly start testing.
+    
+    -   Author: Tapiwa Gutu
+    -   Maintainer of this fork: cage
+    
+    CLUnit provides a rich set of features aimed at improving your unit testing experience:
+    
+    -   Multiple inheritance for test suites allows you to group tests into hierarchies.
+    -   Composes the test results of each test run into a single report.
+    -   Allows redefinition of inline functions and macros without having to redefine your tests.
+    -   Supports composable test suite fixtures.
+    -   Allows for an interactive testing process which gives you access to the test environment.
+    -   Provides visual feedback of the unit test progress.
+    -   Extensible test reporting. Builtin support for default reporting and ["Test Anything Protocol" (TAP)](http://en.wikipedia.org/wiki/Test_Anything_Protocol) output.
+    -   Released under MIT license
+    

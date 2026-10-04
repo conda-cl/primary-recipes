@@ -1,0 +1,49 @@
+package:
+  name: file-attributes
+  version: "0.0.0.2025.12.05"
+
+source:
+  git: https://codeberg.org/shinmera/file-attributes.git
+  rev: 531dbc87525c0f1051ac70612d8ace3e2d866c59
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/file-attributes"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - cl-cffi
+    - documentation-utils
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "file-attributes")'
+          --eval '(asdf:test-system "file-attributes")'
+
+about:
+  repository: https://codeberg.org/shinmera/file-attributes.git
+  documentation: https://shinmera.com/docs/file-attributes/
+  license: Zlib
+  summary: Access to common file attributes (uid, gid, permissions, ctime, mtime, atime) from Common Lisp.
+  description: |
+    This is a small OS portability library to retrieve and set file attributes not supported by the Lisp standard functions.
+
+    **How To**
+    
+    Simply use the functions `access-time`, `modification-time`, and `creation-time` to access the relevant timestamps. Some stamps may not be accessible or modifiable depending on your OS or file system.
+
+    In order to manage attribute information, use `owner`, `group`, and `attributes`. The values used are OS specific for these functions, though the attributes flag can be decoded and encoded via a standardised form with `decode-attributes` and `encode-attributes`.
+
+    Any of the above operations may signal an error if the file does not exist, is inaccessible, the operation is not possible, or some other failure occurred.
+
+    See the [documentation](https://shinmera.com/docs/file-attributes/) for more details.
+

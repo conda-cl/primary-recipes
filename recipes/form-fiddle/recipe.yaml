@@ -1,0 +1,49 @@
+package:
+  name: form-fiddle
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/form-fiddle
+  rev: a4481ccd10a01bcc89bcc66c2e7c9b260332a82b
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/form-fiddle"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - documentation-utils
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "form-fiddle")'
+          --eval '(asdf:test-system "form-fiddle")'
+
+about:
+  repository: https://codeberg.org/shinmera/form-fiddle
+  documentation: https://shinmera.com/docs/form-fiddle/
+  license: Zlib
+  summary: A collection of utilities to destructure lambda forms in Common Lisp.
+  description: |
+    There's individual functions to extract each part of a lambda-definition-form: function, name, qualifiers, lambda-list, body, declarations, docstring and the forms. You can get all in one with `split-lambda-form`, or directly as a binding macro with `with-destructured-lambda-form`.
+
+    ```lisp
+    (split-lambda-form '(defun lambda-body (lambda-form)
+                          (cddr lambda-form)))
+    
+    (with-destructured-lambda-form (:forms forms)
+        '(defmacro foo (bar)
+           (declare (ignore bar))
+           "Testing macro!"
+           (print "test!"))
+      forms)
+    ```

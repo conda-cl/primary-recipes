@@ -1,0 +1,45 @@
+package:
+  name: binding-arrows
+  version: "0.0.0.2024.03.28"
+
+source:
+  git: https://github.com/phoe/binding-arrows.git
+  rev: 46bcba8bb1ff27cd5caab3bda36f000d0489a4f2
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/binding-arrows"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "binding-arrows")'
+          --eval '(asdf:test-system "binding-arrows")'
+    requirements:
+      run:
+        - hu.dwim.stefil
+
+about:
+  repository: https://github.com/phoe/binding-arrows.git
+  documentation: https://github.com/phoe/binding-arrows/blob/main/README.md
+  license: MIT
+  summary: An implementation of threading macros based on binding anonymous variables in Common Lisp.
+  description: |
+    This system implements binding threading macros - a kind of threading macros with different semantics than classical, [Clojure core threading macros](https://clojure.org/guides/threading_macros) or their extension, [swiss-arrows](https://github.com/rplevy/swiss-arrows). Two Common Lisp implementations of those are [arrows](https://github.com/Harleqin/arrows) and [arrow-macros](https://github.com/hipeta/arrow-macros).
+
+    This system is a fork of [arrows](https://github.com/Harleqin/arrows) with changes in semantics that make it impossible to merge back upstream.
+
+    A binding threading macro implicitly binds a variable on each computation step, as opposed to working purely on the syntactic level like the classical threading macros.
+
+    See the [documentation](https://github.com/phoe/binding-arrows/blob/main/README.md) for more details.

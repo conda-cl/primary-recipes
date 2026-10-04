@@ -1,0 +1,36 @@
+package:
+  name: trivial-package-local-nicknames
+  version: "0.0.0.2026.06.05"
+
+source:
+  git: https://github.com/phoe/trivial-package-local-nicknames
+  rev: 89141d409a75dc72db968204a3bf5de836dd66cc
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/trivial-package-local-nicknames"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "trivial-package-local-nicknames")'
+          --eval '(asdf:test-system "trivial-package-local-nicknames")'
+
+about:
+  repository: https://github.com/phoe/trivial-package-local-nicknames
+  documentation: https://github.com/phoe/trivial-package-local-nicknames/blob/master/README.md
+  license: Unlicense
+  summary: Common Lisp PLN compatibility library.
+  description: |
+    This was done so there is a portability library for the PLN API not included in `DEFPACKAGE`.

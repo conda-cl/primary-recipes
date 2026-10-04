@@ -1,0 +1,42 @@
+package:
+  name: unix-opts
+  version: "0.0.0.2021.01.07"
+
+source:
+  git: https://github.com/libre-man/unix-opts
+  rev: 0e61f34b2ecf62288437810d4abb31e572048b04
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/unix-opts"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "unix-opts")'
+          --eval '(asdf:test-system "unix-opts")'
+
+about:
+  repository: https://github.com/libre-man/unix-opts
+  documentation: https://github.com/libre-man/unix-opts/blob/master/README.md
+  license: MIT
+  summary: Unix-style command line options parser for Common Lisp
+  description: |
+    This is a minimalistic parser of command line options. The main advantage of the library is the ability to concisely define command line options once and then use this definition for parsing and extraction of command line arguments, as well as printing description of command line options (you get `--help` for free). This way you don't need to repeat yourself. Also, unix-opts doesn't depend on anything and allows to precisely control behavior of the parser via Common Lisp restarts.
+
+    Inspired by Haskell's `optparse-applicative` and Python's `argparse`.
+
+    It is portable accross implementations.
+
+    See the [documentation](https://github.com/libre-man/unix-opts/blob/master/README.md) for more details.

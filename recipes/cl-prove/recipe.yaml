@@ -1,0 +1,46 @@
+package:
+  name: cl-prove
+  version: "0.0.0.2019.12.31"
+
+source:
+  git: https://github.com/fukamachi/prove
+  rev: 5d71f02795b89e36f34e8c7d50e69b67ec6ca2de
+  submodules: false
+
+build:
+  noarch: generic
+  script: build.sh
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - alexandria
+    - cl-ansi-text
+    - cl-colors
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "prove-test")'
+          --eval '(asdf:test-system "prove-test")'
+    requirements:
+      run:
+        - split-sequence
+
+about:
+  repository: https://github.com/fukamachi/prove
+  license: MIT
+  documentation: https://github.com/fukamachi/prove/blob/master/README.markdown
+  summary: Yet another unit testing framework for Common Lisp
+  description: |
+    'prove' is yet another unit testing framework for Common Lisp.
+
+    The advantages of 'prove' are:
+
+      -   Various simple functions for testing and informative error messages
+      -   [ASDF integration](https://github.com/fukamachi/prove#asdf-integration)
+      -   [Extensible test reporters](https://github.com/fukamachi/prove#reporters)
+      -   Colorizes the report if it's available ([note for SLIME](https://github.com/fukamachi/prove#colorize-test-reports-on-slime))
+      -   Reports test durations

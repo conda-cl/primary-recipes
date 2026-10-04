@@ -1,0 +1,47 @@
+package:
+  name: cl-pzmq
+  version: "0.0.0.2021.05.16"
+
+source:
+  git: https://github.com/orivej/pzmq
+  rev: 6f7b2ca02c23ea53510a9b0e0f181d5364ce9d32
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/pzmq"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - cl-cffi
+    - zeromq
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "pzmq")'
+          --eval '(asdf:test-system "pzmq")'
+    requirements:
+      run:
+        - fiveam
+        - let-plus
+        - bordeaux-threads
+        - cl-babel
+
+about:
+  repository: https://github.com/orivej/pzmq
+  documentation: https://orivej.github.io/pzmq/doc/index.html
+  license: Unlicense
+  summary: ZeroMQ 4.0+ Common Lisp bindings.
+  description: |
+    ZeroMQ 3.2+ bindings.  
+  
+    Consult [official C API reference](http://api.zeromq.org/4-0:zmq) first.

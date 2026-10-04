@@ -1,0 +1,43 @@
+package:
+  name: float-features
+  version: "0.0.0.2026.08.19"
+
+source:
+  git: https://codeberg.org/shinmera/float-features.git
+  rev: 5f54e8734b2e959641633831571ece5501da8ded
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/float-features"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - documentation-utils
+    - trivial-features
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "float-features")'
+          --eval '(asdf:test-system "float-features")'
+    requirements:
+      run:
+        - parachute
+
+about:
+  repository: https://codeberg.org/shinmera/float-features.git
+  documentation: https://shinmera.com/docs/float-features/
+  license: Zlib
+  summary: Portability library for IEEE float features that are not covered by the Common Lisp standard. 
+  description: |
+    This is a wrapper library for IEEE floating point features not present in the Common Lisp standard.
+
+    See the [documentation](https://shinmera.com/docs/float-features/) for more details.

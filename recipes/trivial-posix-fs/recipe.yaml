@@ -1,0 +1,39 @@
+package:
+  name: trivial-posix-fs
+  version: "0.0.0.2026.10.04"
+
+source:
+  git: https://codeberg.org/digikar/trivial-posix-fs.git
+  rev: 4050a72f61cd8281887a92ba73e6387f1532e6c3
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/trivial-posix-fs"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sbcl
+    - cl-asdf
+    - cl-ppcre
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "trivial-posix-fs")'
+          --eval '(asdf:test-system "trivial-posix-fs")'
+
+about:
+  repository: https://codeberg.org/digikar/trivial-posix-fs.git
+  documentation: https://codeberg.org/digikar/trivial-posix-fs/src/branch/master/README.md
+  license: MIT
+  summary: Lightweight POSIXy style filesystem API for Common Lisp
+  description: |
+    Thin posix-y filesystem interface for Common Lisp. This package is still experimental and untested.
+
+    See the [documentation](https://codeberg.org/digikar/trivial-posix-fs/src/branch/master/README.md) for more details.
