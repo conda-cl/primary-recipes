@@ -1,10 +1,10 @@
 package:
   name: cl-isocline-repl
-  version: "0.0.0.2026.09.18"
+  version: "0.0.0.2026.10.04"
 
 source:
   git: https://github.com/digikar99/cl-isocline
-  rev: d35c11d4e33a8a01079e1cc16f1893fa51b9000e
+  rev: ac00ef7cae3cc714c46df757bb3808380b3ea71c
   submodules: false
 
 build:

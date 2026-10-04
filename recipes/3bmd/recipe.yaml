@@ -1,10 +1,10 @@
 package:
   name: 3bmd
-  version: "0.0.0.2026.06.26"
+  version: "0.0.0.2026.09.30"
 
 source:
   git: https://github.com/3b/3bmd
-  rev: 41262d9885fe324f157f892ad3ebbfdb5561250f
+  rev: bc7ae591e58a4db60ff41c2b550323bab2c6dfd0
   submodules: false
 
 build:
