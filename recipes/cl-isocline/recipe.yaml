@@ -12,7 +12,7 @@ build:
   script: build.sh
 
 requirements:
-  build:
+  host:
     - if: win
       then:
         - m2-base
@@ -23,6 +23,9 @@ requirements:
     - cl-asdf
     - alexandria
     - cl-cffi
+  ignore_run_exports:
+    by_name:
+      - libgcc
 
 tests:
   - script:
@@ -37,7 +40,7 @@ about:
   repository: https://github.com/digikar99/cl-isocline
   homepage: https://github.com/digikar99/cl-isocline/blob/main/README.md
   license: MIT
-  summary: Foreign function bindings to isocline for Common Lisp 
+  summary: Foreign function bindings to isocline for Common Lisp
   description: |
     [Isocline](https://github.com/daanx/isocline) is an alternative to libreadline, libedit and the likes. In contrast to the contagious GPL-licensed libreadline, it is
 
