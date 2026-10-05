@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - flexi-streams
 
@@ -23,6 +22,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "md5")'
           --eval '(asdf:test-system "md5")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/pmai/md5

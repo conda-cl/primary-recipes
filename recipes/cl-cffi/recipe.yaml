@@ -26,7 +26,6 @@ outputs:
         - if: build_platform == "win-64"
           then: m2-base
       run:
-        - sbcl
         - cl-asdf
         - alexandria
         - trivial-features
@@ -37,6 +36,9 @@ outputs:
               --eval "(require :asdf)"
               --eval "(asdf:load-system :cffi)"
               --eval "(asdf:load-system :cffi-examples)"
+        requirements:
+          run:
+            - sbcl
 
   - package:
       name: cl-cffi-grovel
@@ -77,6 +79,7 @@ outputs:
                         (asdf:test-system :cffi))"
         requirements:
           run:
+            - sbcl
             - cl-rt
             - bordeaux-threads
 

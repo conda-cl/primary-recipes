@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -22,6 +21,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "trivial-gray-streams-test")'
           --eval '(trivial-gray-streams-test:run-tests)'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/trivial-gray-streams/trivial-gray-streams

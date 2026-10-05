@@ -20,7 +20,6 @@ requirements:
       else:
         - ${{ compiler('c') }}
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - cl-cffi
@@ -30,6 +29,9 @@ tests:
       - sbcl --no-userinit --non-interactive
           --eval "(require :asdf)"
           --eval "(asdf:load-system \"isocline\")"
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/digikar99/cl-isocline

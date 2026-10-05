@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - cl-ansi-text
@@ -27,6 +26,7 @@ tests:
           --eval '(asdf:test-system "prove-test")'
     requirements:
       run:
+        - sbcl
         - split-sequence
 
 about:

@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -24,6 +23,9 @@ tests:
           ## --eval '(asdf:load-system "trivial-features-tests")'
           ## trivial-features-tests depends on cffi; cffi depends on trivial-features.
           ## We will defer testing of trivial-features to cffi.
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/trivial-features/trivial-features

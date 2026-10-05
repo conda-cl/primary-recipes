@@ -15,11 +15,10 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - bordeaux-threads
     - cl-sdm >0.99.38.2025.12.31
-    - cl-cffi
+    - cl-cffi-grovel
     - trivial-garbage
     - trivial-indent
     - zeromq
@@ -30,6 +29,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "cl-remizmq")'
           --eval '(asdf:load-system "cl-remizmq-examples")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://fossil.cyberia9.org/cl-remizmq/dir?ci=trunk

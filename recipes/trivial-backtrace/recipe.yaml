@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -26,6 +25,7 @@ tests:
         ## Without the muffle, sbcl produces division-by-zero warnings which abort the load.
     requirements:
       run:
+        - sbcl
         - cl-lift
 
 about:

@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -22,6 +21,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "swank")'
           --eval '(asdf:test-system "swank")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/slime/slime.git

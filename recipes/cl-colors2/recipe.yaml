@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - cl-ppcre
@@ -27,6 +26,7 @@ tests:
           --eval '(asdf:test-system "cl-colors2")'
     requirements:
       run:
+        - sbcl
         - cl-unit2
 
 about:

@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - global-vars
@@ -28,6 +27,7 @@ tests:
           --eval '(asdf:test-system "bordeaux-threads")'
     requirements:
       run:
+        - sbcl
         - fiveam
 
 about:

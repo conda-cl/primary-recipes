@@ -45,7 +45,6 @@ outputs:
 
     requirements:
       run:
-        - sbcl
         - ${{ pin_subpackage("cl-asdf-configuration", upper_bound="x") }}
 
     tests:
@@ -55,6 +54,9 @@ outputs:
               --eval '(format t "~A~%" (asdf:asdf-version))'
               --eval '(asdf:load-system "asdf")'
               --eval '(unless (string= "3.3.7.4" (asdf:system-version (asdf:find-system "asdf"))) (uiop:quit 1))'
+        requirements:
+          run:
+            - sbcl
 
     about:
       repository: https://gitlab.common-lisp.net/asdf/asdf.git

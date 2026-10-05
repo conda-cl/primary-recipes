@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - closer-mop
@@ -28,6 +27,7 @@ tests:
           --eval '(asdf:test-system "optima")'
     requirements:
       run:
+        - sbcl
         - cl-eos
 
 about:

@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -21,6 +20,9 @@ tests:
       - sbcl --no-userinit --non-interactive
           --eval '(require :asdf)'
           --eval '(asdf:load-system "trivial-with-current-source-form")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/scymtym/trivial-with-current-source-form

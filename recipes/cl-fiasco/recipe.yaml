@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - trivial-gray-streams
@@ -24,6 +23,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "fiasco")'
           --eval '(asdf:test-system "fiasco")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/joaotavora/fiasco

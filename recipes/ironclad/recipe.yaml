@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - bordeaux-threads
     - cl-md5
@@ -27,6 +26,7 @@ tests:
           --eval '(asdf:test-system "ironclad")'
     requirements:
       run:
+        - sbcl
         - cl-rt
 
 about:

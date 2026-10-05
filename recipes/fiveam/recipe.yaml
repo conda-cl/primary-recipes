@@ -13,7 +13,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
     - alexandria
     - net.didierverna.asdf-flv
@@ -25,6 +24,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "fiveam/test")'
           --eval '(asdf:test-system "fiveam")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: https://github.com/lispci/fiveam

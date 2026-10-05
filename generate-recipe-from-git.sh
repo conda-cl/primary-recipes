@@ -65,7 +65,6 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
 
 tests:
@@ -74,6 +73,9 @@ tests:
           --eval '(require :asdf)'
           --eval '(asdf:load-system "${SYSTEM}")'
           --eval '(asdf:test-system "${SYSTEM}")'
+    requirements:
+      run:
+        - sbcl
 
 about:
   repository: ${REPO_URL}

@@ -18,9 +18,8 @@ build:
 
 requirements:
   run:
-    - sbcl
     - cl-asdf
-    - cl-cffi
+    - cl-cffi-grovel
     - zeromq
 
 tests:
@@ -31,6 +30,7 @@ tests:
           --eval '(asdf:test-system "pzmq")'
     requirements:
       run:
+        - sbcl
         - fiveam
         - let-plus
         - bordeaux-threads
