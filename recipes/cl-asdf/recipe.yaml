@@ -1,41 +1,73 @@
-package:
+schema_version: 1
+
+context:
+  asdf_version: "3.3.7.4"
+  config_version: "0.1.0"
+
+recipe:
   name: cl-asdf
-  version: "3.3.7.4"
+  version: ${{ asdf_version }}
 
-source:
-  git: https://gitlab.common-lisp.net/asdf/asdf.git
-  rev: acfaef0a4c7ebdc9bf7e4bd65f33086fdf76ec0c
-  submodules: false
+outputs:
+  - package:
+      name: cl-asdf-configuration
+      version: ${{ config_version }}
 
-build:
-  noarch: generic
-  script: build.sh
-  number: 2
+    build:
+      number: 0
+      noarch: generic
+      script: build-configuration.sh
 
-requirements:
-  run:
-    - sbcl
+    tests:
+      - package_contents:
+          files:
+            - etc/conda/activate.d/cl-asdf.sh
+            - etc/conda/activate.d/cl-asdf.bat
 
-tests:
-  - script:
-      - sbcl --no-userinit --non-interactive
-          --eval '(require :asdf)'
-          --eval '(format t "~A~%" (asdf:asdf-version))'
-          --eval '(asdf:load-system "asdf")'
-          --eval '(string= "3.3.7.4" (asdf:system-version (asdf:find-system "asdf")))'
+    about:
+      homepage: https://asdf.common-lisp.dev/
+      license: MIT
+      summary: Sets CL_SOURCE_REGISTRY on activation so ASDF finds systems in the conda prefix (and the pixi project root).
 
-about:
-  repository: https://gitlab.common-lisp.net/asdf/asdf.git
-  homepage: https://asdf.common-lisp.dev/
-  license: MIT
-  summary: ASDF builds Common Lisp software organized into defined systems. This package also installs sets up CL_SOURCE_REGISTRY variable for pixi environment.
-  documentation: https://asdf.common-lisp.dev/asdf.html
-  description: |
-    For general information about ASDF, consult the web page:
-      https://common-lisp.net/project/asdf/
+  - package:
+      name: cl-asdf
+      version: ${{ asdf_version }}
 
-    For some reference documentation, read the manual:
-      https://common-lisp.net/project/asdf/asdf.html
+    source:
+      git: https://gitlab.common-lisp.net/asdf/asdf.git
+      rev: acfaef0a4c7ebdc9bf7e4bd65f33086fdf76ec0c
+      submodules: false
 
-    For a guide on how to use it, read our "best practices" document:
-      https://github.com/fare/asdf/blob/master/doc/best_practices.md
+    build:
+      number: 3
+      noarch: generic
+      script: build-asdf.sh
+
+    requirements:
+      run:
+        - sbcl
+        - ${{ pin_subpackage("cl-asdf-configuration", upper_bound="x") }}
+
+    tests:
+      - script:
+          - sbcl --no-userinit --non-interactive
+              --eval '(require :asdf)'
+              --eval '(format t "~A~%" (asdf:asdf-version))'
+              --eval '(asdf:load-system "asdf")'
+              --eval '(unless (string= "3.3.7.4" (asdf:system-version (asdf:find-system "asdf"))) (uiop:quit 1))'
+
+    about:
+      repository: https://gitlab.common-lisp.net/asdf/asdf.git
+      homepage: https://asdf.common-lisp.dev/
+      license: MIT
+      summary: ASDF builds Common Lisp software organized into defined systems.
+      documentation: https://asdf.common-lisp.dev/asdf.html
+      description: |
+        For general information about ASDF, consult the web page:
+          https://common-lisp.net/project/asdf/
+
+        For some reference documentation, read the manual:
+          https://common-lisp.net/project/asdf/asdf.html
+
+        For a guide on how to use it, read our "best practices" document:
+          https://github.com/fare/asdf/blob/master/doc/best_practices.md
