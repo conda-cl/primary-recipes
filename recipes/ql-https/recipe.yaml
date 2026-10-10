@@ -1,0 +1,64 @@
+package:
+  name: ql-https
+  version: "1.0"
+
+source:
+  git: https://github.com/rudolfochrist/ql-https
+  rev: c799b2536c0a6ec54554aaa8b125f5694d2f3ad3
+  submodules: false
+
+build:
+  noarch: generic
+  script: install.sh
+
+requirements:
+  build:
+    - sbcl
+    - cl-asdf-configuration
+  run:
+    - curl
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --load "$CONDA_PREFIX/quicklisp/setup.lisp"
+          --eval '(asdf:load-system "ql-https")'
+          --eval '(asdf:test-system "ql-https")'
+    requirements:
+      run:
+        - fiveam
+        - sbcl
+
+about:
+  repository: https://github.com/rudolfochrist/ql-https
+  documentation: https://github.com/rudolfochrist/ql-https/blob/master/README.md
+  license: MIT
+  summary: Quicklisp with HTTPS support via curl for installing Common Lisp libraries
+  description: |
+    ql-https -- HTTPS support for Quicklisp via curl
+
+         (asdf:load-system "ql-https")
+
+    This package
+
+    - installs ql-https in `$PREFIX/common-lisp`,
+    - creates a `$PREFIX/quicklisp` directory,
+    - creates a `$PREFIX/lib/sbcl/sbclrc.d/10-quicklisp.lisp` script that loads quicklisp
+
+    The `10-quicklisp.lisp` script only takes effect on SBCL 2.6.9 with build number 1 or more recent SBCL releases. Others may paste the below code in their `~/.sbclrc`.
+
+    ```lisp
+    (require 'asdf)
+
+    #-quicklisp
+    (let* ((quicklisp-home (merge-pathnames "quicklisp/"
+                                           (uiop:ensure-directory-pathname
+                                            (or (uiop:getenv "CONDA_PREFIX")
+                                                (user-homedir-pathname)))))
+           (quicklisp-init (merge-pathnames "setup.lisp" quicklisp-home)))
+      (when (probe-file quicklisp-init)
+        (load quicklisp-init))
+      (setf (symbol-value (find-symbol "*QUICKLISP-HOME*" :ql)) quicklisp-home))
+    ```
