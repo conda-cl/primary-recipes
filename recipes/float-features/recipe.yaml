@@ -1,10 +1,10 @@
 package:
   name: float-features
-  version: "0.0.0.2026.08.19"
+  version: "0.0.0.2026.10.11"
 
 source:
   git: https://codeberg.org/shinmera/float-features.git
-  rev: 5f54e8734b2e959641633831571ece5501da8ded
+  rev: ee189527ac587756c231ed3ddb1cb0a7238dc2eb
   submodules: false
 
 build:

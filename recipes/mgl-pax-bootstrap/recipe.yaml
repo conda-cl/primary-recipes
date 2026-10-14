@@ -1,10 +1,10 @@
 package:
   name: mgl-pax-bootstrap
-  version: "0.0.0.2026.08.03"
+  version: "0.0.0.2026.10.13"
 
 source:
   git: https://github.com/melisgl/mgl-pax
-  rev: d91517cf9b76a21e50d90968e4a80b685e22dd34
+  rev: 943995e5e374902af468c12ae66b808a8c9ec699
   submodules: false
 
 build:

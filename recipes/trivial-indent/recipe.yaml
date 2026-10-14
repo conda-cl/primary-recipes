@@ -1,10 +1,10 @@
 package:
   name: trivial-indent
-  version: "0.0.0.2026.09.12"
+  version: "0.0.0.2026.10.07"
 
 source:
   git: https://codeberg.org/shinmera/trivial-indent.git
-  rev: 7281fb015c573c35a3a25392f3019c5e32fe0bd0
+  rev: b181b48c7e311f6c5e84421909d5abce2db5b618
   submodules: false
 
 build:

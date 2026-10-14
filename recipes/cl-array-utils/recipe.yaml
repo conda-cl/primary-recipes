@@ -28,6 +28,7 @@ tests:
     requirements:
       run:
         - sbcl
+        - parachute
 
 about:
   repository: https://codeberg.org/shinmera/array-utils
