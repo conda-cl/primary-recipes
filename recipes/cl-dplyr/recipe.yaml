@@ -1,0 +1,49 @@
+package:
+  name: cl-dplyr
+  version: "0.0.0.2026.10.10"
+
+source:
+  git: https://codeberg.org/digikar/cl-dplyr.git
+  rev: 002ec9562eb15497ed62136e116c29aaeec7c79d
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-dplyr"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - alexandria
+    - cl-optima
+    - parse-number
+    - cl-str
+    - fare-csv
+    - binding-arrows
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "dplyr")'
+          --eval '(asdf:load-system "dplyr-utils")'
+          --eval '(asdf:load-system "dplyr-user")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://codeberg.org/digikar/cl-dplyr.git
+  documentation: https://codeberg.org/digikar/cl-dplyr/src/branch/main/README.org
+  license: MIT
+  summary: WIP Common Lisp implementation of R's dplyr 
+  description: |
+    Rs [dplyr](https://dplyr.tidyverse.org/)\-inspired data frame agnostic verb-oriented data processing library for Common Lisp.
+
+    The best place to get a conceptual grounding is through the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for data science.
+
+    See the [documentation](https://codeberg.org/digikar/cl-dplyr/src/branch/main/README.org) for more details.

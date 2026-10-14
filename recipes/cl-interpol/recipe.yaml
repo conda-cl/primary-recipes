@@ -1,0 +1,53 @@
+package:
+  name: cl-interpol
+  version: "0.0.0.2022.07.25"
+
+source:
+  git: https://github.com/edicl/cl-interpol
+  rev: d4f49d45257be1512db238a5c740e69a5964e93b
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-interpol"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-unicode
+    - named-readtables
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "cl-interpol")'
+          --eval '(asdf:test-system "cl-interpol")'
+    requirements:
+      run:
+        - sbcl
+        - flexi-streams
+
+about:
+  repository: https://github.com/edicl/cl-interpol
+  documentation: https://edicl.github.io/cl-interpol/
+  license: BSD-2-Clause
+  summary: Common Lisp surface syntax niceties.
+  description: |
+    CL-INTERPOL is a library for Common Lisp which modifies the reader so that you can have interpolation within strings similar to Perl or Unix Shell scripts. It also provides various ways to insert arbitrary characters into literal strings even if your editor/IDE doesn't support them. Here's an example:
+
+    ```lisp
+    (named-readtables:in-readtable :interpol-syntax)
+    
+    
+    (let ((a 42))
+      #?"foo: \\xC4\\N{Latin capital letter U with diaeresis}\\nbar: ${a}")
+    "foo: ÄÜ
+    bar: 42"
+    ```
+
+    Complete documentation for CL-INTERPOL can be found in the `docs` directory or at [the project documentation site](http://edicl.github.io/cl-interpol/).

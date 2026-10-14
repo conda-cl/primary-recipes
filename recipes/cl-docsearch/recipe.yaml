@@ -1,0 +1,61 @@
+recipe:
+  name: cl-docsearch
+  version: "0.0.0.2026.02.12"
+
+source:
+  git: https://github.com/digikar99/cl-docsearch
+  rev: eccf1516cb896b64b1ac8b16a28cf186495b5e3e
+  submodules: false
+
+outputs:
+  - package:
+      name: cl-docsearch
+    build:
+      noarch: generic
+      script:
+        - DEST="$PREFIX/common-lisp/cl-docsearch"
+        - mkdir -p "$DEST"
+        - cp -r . "$DEST/"
+        - rm -rf "$DEST/.git"
+    requirements:
+      run:
+        - cl-asdf
+    tests:
+      - script:
+          - sbcl --no-userinit --non-interactive --eval '(require :asdf)' --eval '(asdf:load-system "docsearch")'
+        requirements:
+          run:
+            - sbcl
+  - package:
+      name: cl-docsearch-ollama
+    build:
+      noarch: generic
+      script:
+        - DEST="$PREFIX/common-lisp/cl-docsearch"
+        - mkdir -p "$DEST"
+        - cp -r . "$DEST/"
+        - rm -rf "$DEST/.git"
+    requirements:
+      run:
+        - cl-asdf
+        - ollama
+        - dexador
+        - cl-docsearch
+        - shasht
+        - trivial-arguments
+    tests:
+      - script:
+          - sbcl --no-userinit --non-interactive --eval '(require :asdf)' --eval '(asdf:load-system "docsearch-ollama")'
+
+        requirements:
+          run:
+            - sbcl
+about:
+  repository: https://github.com/digikar99/cl-docsearch
+  documentation: https://github.com/digikar99/cl-docsearch/blob/main/README.md
+  license: MIT
+  summary: A tool to search documentation of lisp symbols in the current lisp image.
+  description: |
+    Search documentation of Common Lisp symbols in the current lisp image for a query string.
+
+    The base package and system is pure Common Lisp. An additional system docsearch-ollama is included for use with [ollama](https://github.com/digikar99/cl-docsearch/blob/main/README-docsearch-ollama.md).

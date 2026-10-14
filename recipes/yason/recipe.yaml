@@ -1,0 +1,43 @@
+package:
+  name: yason
+  version: "0.0.0.2025.03.23"
+
+source:
+  git: https://github.com/phmarek/yason
+  rev: 0c84b29a32c284f6b4be6f8587ff89b5702a6fda
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/yason"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - alexandria
+    - trivial-gray-streams
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "yason")'
+          --eval '(asdf:test-system "yason")'
+    requirements:
+      run:
+        - sbcl
+        - unit-test
+
+about:
+  repository: https://github.com/phmarek/yason
+  documentation: https://phmarek.github.io/yason/
+  license: BSD-3-Clause
+  summary: Common Lisp JSON serializer written with simplicity in mind
+  description: |
+    YASON is a Common Lisp library for encoding and decoding data in the JSON interchange format. JSON is used as a lightweight alternative to XML. YASON has the sole purpose of encoding and decoding data and does not impose any object model on the Common Lisp application that uses it.
+
+    See the [documentation](https://phmarek.github.io/yason/) for more details.

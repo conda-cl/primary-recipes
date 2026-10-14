@@ -1,0 +1,48 @@
+package:
+  name: local-time
+  version: "0.0.0.2026.05.01"
+
+source:
+  git: https://github.com/sharplispers/local-time
+  rev: 59d93f7fdaa45b7cad6c26ac4494e8efb9e16e02
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/local-time"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "local-time")'
+          --eval '(asdf:test-system "local-time")'
+    requirements:
+      run:
+        - sbcl
+        - cl-fiasco
+
+about:
+  repository: https://github.com/sharplispers/local-time
+  documentation: https://local-time.common-lisp.dev/manual.html
+  license: MIT
+  summary: A Common Lisp library for manipulating dates and times, based on a paper by Erik Naggum
+  description: |
+    local-time is a development library for manipulating date and time information in a semi-standard manner. It is based almost entirely off of Erik Naggum's paper, [The Long, Painful History of Time](http://naggum.no/lugm-time.html). It includes such features as:
+
+      -   Time and date arithmetic
+      -   ISO 8601 timestring formatted output and parsing
+      -   Reader macros to embed timestrings directly in code
+      -   Timezone handling (will read unix tzfile format)
+      -   Conversion between universal and unix time epochs
+      -   Julian date calculation
+
+    See the [documentation](https://local-time.common-lisp.dev/manual.html) for more details.

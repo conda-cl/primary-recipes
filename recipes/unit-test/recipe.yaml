@@ -1,0 +1,35 @@
+package:
+  name: unit-test
+  version: "0.0.0.2012.04.23"
+
+source:
+  git: https://code.netzhansa.com/hanshuebner/unit-test
+  rev: 266afaf4ac091fe0e8803bac2ae72d238144e735
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/unit-test"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "unit-test")'
+          --eval '(asdf:test-system "unit-test")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://code.netzhansa.com/hanshuebner/unit-test
+  description: |
+    No description provided.

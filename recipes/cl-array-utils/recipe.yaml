@@ -1,0 +1,40 @@
+package:
+  name: cl-array-utils
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/array-utils
+  rev: 16e108a516a1e6662adaa59f05841b8d251c250f
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/array-utils"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "array-utils")'
+          --eval '(asdf:test-system "array-utils")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://codeberg.org/shinmera/array-utils
+  documentation: https://shinmera.com/docs/array-utils/
+  license: Zlib
+  summary: A tiny collection of utilities to work with arrays and vectors.
+  description: |
+    A miniature toolkit that contains some useful shifting/popping/pushing functions for arrays and vectors. This exists mostly because I've used these functions in multiple places already, so splitting it off into its own thing is a good idea. Originally from [Plump](http://shinmera.github.io/plump/).
+
+    See the [documentation](https://shinmera.com/docs/array-utils/) for more details.
