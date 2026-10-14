@@ -6,9 +6,9 @@ PACKAGES="$@"
 
 # Usage: ./publish.sh pkg-a pkg-b pkg-c
 
-for pkg in "${PACKAGES[@]}"; do
+for pkg in ${PACKAGES[@]}; do
     (
         cd "recipes/$pkg"
-        rattler-build publish recipe.yaml --to "$CHANNEL_URL"
+        rattler-build publish recipe.yaml --to "$CHANNEL_URL" --allow-symlinks-on-windows
     )
 done

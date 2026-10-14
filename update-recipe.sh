@@ -35,6 +35,7 @@ recipe="recipes/$pkg/recipe.yaml"
 
 version=$(grep -m1 -E '^\s*version:' "$recipe" | sed -E 's/^\s*version:\s*"?([^"#]*)"?.*/\1/')
 url=$(grep -m1 -E '^\s*git:' "$recipe" | sed -E 's/^\s*git:\s*//')
+echo $url
 
 [[ -n "$version" ]] || { echo "no version: found in $recipe" >&2; exit 1; }
 [[ -n "$url" ]]     || { echo "no git: found in $recipe" >&2; exit 1; }
