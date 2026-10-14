@@ -1,0 +1,40 @@
+package:
+  name: lisp-unit
+  version: "0.0.0.2016.12.27"
+
+source:
+  git: https://github.com/OdonataResearchLLC/lisp-unit
+  rev: 89653a232626b67400bf9a941f9b367da38d3815
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/lisp-unit"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "lisp-unit")'
+          --eval '(asdf:test-system "lisp-unit")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/OdonataResearchLLC/lisp-unit
+  documentation: https://github.com/OdonataResearchLLC/lisp-unit/wiki
+  license: MIT
+  summary: A Test Framework for Common Lisp in the style of JUnit, designed and implemented with simplicity of use in mind.
+  description: |
+    _lisp-unit_ is a Common Lisp library that supports unit testing. It is an extension of the [library written by Chris Riesbeck](http://www.cs.northwestern.edu/academics/courses/325/readings/lisp-unit.html "Original Lisp Unit"). There is a long history of testing packages in Lisp, usually called "regression" testers. More recent packages in Lisp and other languages have been inspired by [JUnit for Java](http://www.junit.org/ "JUnit").
+
+    [Documentation is located on the project wiki.](https://github.com/OdonataResearchLLC/lisp-unit/wiki "Lisp Unit Wiki")

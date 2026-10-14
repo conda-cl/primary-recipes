@@ -1,0 +1,42 @@
+package:
+  name: parse-float
+  version: "0.0.0.2025.09.25"
+
+source:
+  git: https://github.com/soemraws/parse-float
+  rev: 622e582260a848fbe45e2de88b2a6f98540d8624
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/parse-float"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - alexandria
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "parse-float")'
+          --eval '(asdf:test-system "parse-float")'
+    requirements:
+      run:
+        - sbcl
+        - lisp-unit
+
+about:
+  repository: https://github.com/soemraws/parse-float
+  documentation: https://github.com/soemraws/parse-float/blob/master/README.markdown
+  license: Unlicense
+  summary: Parse a floating point value from a string in Common Lisp.
+  description: |
+    This package provides a `parse-float` function to parse floating point values from a string in Common Lisp.
+
+    See the [documentation](https://github.com/soemraws/parse-float/blob/master/README.markdown) for more details.

@@ -1,0 +1,50 @@
+package:
+  name: cl-rove
+  version: "0.0.0.2026.10.07"
+
+source:
+  git: https://github.com/fukamachi/rove
+  rev: ad016fa6762debe0dbf8f131c63555353ae5dd42
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/rove"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-ppcre
+    - dissect
+    - bordeaux-threads
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "rove")'
+    requirements:
+      run:
+        - sbcl
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "rove")'
+          --eval '(asdf:test-system "rove")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/fukamachi/rove
+  homepage: https://github.com/fukamachi/rove/blob/master/README.markdown
+  license: BSD-3-Clause
+  summary: Yet another yet another Common Lisp testing library.
+  description: |
+    Rove is a unit testing framework for Common Lisp applications. This is intended to be a successor of [Prove](https://github.com/fukamachi/prove).
+
+    See the [documentation](https://github.com/fukamachi/rove/blob/master/README.markdown) for more details.
