@@ -1,0 +1,16 @@
+in-package :moonli-user
+
+let+ quicklisp-home = merge-pathnames(
+                        "quicklisp/",
+                        uiop:ensure-directory-pathname(uiop:getenv("CONDA_PREFIX"))
+                      ),
+     quicklisp-init = merge-pathnames("setup.lisp", quicklisp-home):
+
+  if probe-file(quicklisp-init):
+    ## When moonli was compiled, it already had quicklisp-init loaded.
+    ## So, we don't need need to do anything other than set quicklisp home appropriately
+    ## load(quicklisp-init)
+    symbol-value(find-symbol("*QUICKLISP-HOME*", :ql)) = quicklisp-home
+  end
+
+end

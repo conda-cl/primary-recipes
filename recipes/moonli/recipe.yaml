@@ -1,0 +1,72 @@
+context:
+  version: "0.0.11"
+  tag: "v${{ version }}"
+  base: https://github.com/digikar99/moonli/releases/download/${{ tag }}
+
+package:
+  name: moonli
+  version: ${{ version }}
+
+source:
+  - if: linux and x86_64
+    then:
+      url: ${{ base }}/moonli-${{ tag }}.repl.linux.x86_64.bin
+      sha256: 41881bb344603556cf3f28195d7d2c422cd2f25cddb967acd53580a10a47cde3
+      file_name: moonli
+  - if: linux and aarch64
+    then:
+      url: ${{ base }}/moonli-${{ tag }}.repl.linux.aarch64.bin
+      sha256: 002ecdfae690991d12f857bed00a9292140c63f1a9439808ae5609149638b805
+      file_name: moonli
+  - if: osx and x86_64
+    then:
+      url: ${{ base }}/moonli-${{ tag }}.repl.darwin.x86_64.bin
+      sha256: e19fb9653b69c50f6a7f653c56efaf7ff9199f33f57db5d9d464e3a4bb76e354
+      file_name: moonli
+  - if: osx and arm64
+    then:
+      url: ${{ base }}/moonli-${{ tag }}.repl.darwin.arm64.bin
+      sha256: 360ab3f07489b8f9e19bafa2d64f9d581fa74935994dd3ef9d483e61c67b7608
+      file_name: moonli
+  - if: win and x86_64
+    then:
+      url: ${{ base }}/moonli-${{ tag }}.repl.windows.x86_64.exe
+      sha256: b5e1ac7b27149e4ce5cf5477ad5ac15f827305404ea3b4b173b927f32c5323e4
+      file_name: moonli
+
+build:
+  number: 0
+  script:
+    - mkdir -p "$PREFIX/bin"
+    - mkdir -p "$PREFIX/lib/moonli"
+    - mkdir -p "$PREFIX/etc/conda/activate.d/"
+    - install -m 755 "$RECIPE_DIR/moonlirc.sh" "$PREFIX/etc/conda/activate.d/moonlirc.sh"
+    - install -m 755 "$RECIPE_DIR/moonlirc.bat" "$PREFIX/etc/conda/activate.d/moonlirc.bat"
+    - install -m 755 moonli "$PREFIX/bin/moonli"
+    - install -m 644 "$RECIPE_DIR/moonlirc" "$PREFIX/lib/moonli/moonlirc"
+    - cp -r "$RECIPE_DIR/moonlirc.d" "$PREFIX/lib/moonli/moonlirc.d"
+  prefix_detection:
+    ignore: true
+  dynamic_linking:
+    binary_relocation: false
+
+requirements:
+  run:
+    - if: linux
+      then: __glibc >=2.28
+    - cl-asdf-configuration
+
+tests:
+  - package_contents:
+      files:
+        - etc/conda/activate.d/moonlirc.sh
+        - etc/conda/activate.d/moonlirc.bat
+        - lib/moonli/moonlirc
+        - lib/moonli/moonlirc.d/00-README.moonli
+  - script:
+      - moonli --help         # use any invocation that exits 0
+      - echo "defparameter moonlirc-probe = t;" > $PREFIX/lib/moonli/moonlirc.d/99-test.moonli
+      - moonli --eval "assert(moonlirc-probe)" --eval "uiop:quit(0)"
+    requirements:
+      run:
+        - sbcl

@@ -1,0 +1,16 @@
+
+
+## Environment-wide init: load every file in moonlirc.d, in alphabetical order.
+let+ dir = merge-pathnames("moonlirc.d/", uiop:getenv("MOONLIRC")),
+     files = sort(append(directory(merge-pathnames("*.lisp", dir)),
+                         directory(merge-pathnames("*.lsp", dir)),
+                         directory(merge-pathnames("*.moonli", dir))),
+                  $string-lessp, :key, $namestring):
+  loop :for f :in files
+    :do if string-equal("moonli", pathname-type(f)):
+      moonli:load-moonli-file(f, :transpile, nil)
+    else:
+      load(f)
+    end
+  end
+end
