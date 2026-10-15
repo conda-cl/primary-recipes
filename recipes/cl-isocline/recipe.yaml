@@ -1,10 +1,10 @@
 package:
   name: cl-isocline
-  version: "0.0.0.2026.10.04"
+  version: "0.0.0.2026.10.11"
 
 source:
   git: https://github.com/digikar99/cl-isocline
-  rev: ac00ef7cae3cc714c46df757bb3808380b3ea71c
+  rev: 287ae820cf437d0d754bef236f392270f13c4d2b
   submodules: false
 
 build:
@@ -12,7 +12,7 @@ build:
   script: build.sh
 
 requirements:
-  host:
+  build:
     - if: win
       then:
         - m2-base
