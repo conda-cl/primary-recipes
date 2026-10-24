@@ -1,5 +1,5 @@
 context:
-  version: "0.0.11"
+  version: "0.0.12"
   tag: "v${{ version }}"
   base: https://github.com/digikar99/moonli/releases/download/${{ tag }}
 
@@ -11,27 +11,27 @@ source:
   - if: linux and x86_64
     then:
       url: ${{ base }}/moonli-${{ tag }}.repl.linux.x86_64.bin
-      sha256: 41881bb344603556cf3f28195d7d2c422cd2f25cddb967acd53580a10a47cde3
+      sha256: c7fb71003d33697674ff85761643e5ddfe93993ce169fe4fbbab225f89339ca9
       file_name: moonli
   - if: linux and aarch64
     then:
       url: ${{ base }}/moonli-${{ tag }}.repl.linux.aarch64.bin
-      sha256: 002ecdfae690991d12f857bed00a9292140c63f1a9439808ae5609149638b805
+      sha256: b2ac4264303c9df9263aefaaa81a1ca536703104cc7b34908325b027c7f4e0aa
       file_name: moonli
   - if: osx and x86_64
     then:
       url: ${{ base }}/moonli-${{ tag }}.repl.darwin.x86_64.bin
-      sha256: e19fb9653b69c50f6a7f653c56efaf7ff9199f33f57db5d9d464e3a4bb76e354
+      sha256: e9ae8a2509584612667b82c3b1c513a41d50116469be2e5257c426c5e1de8024
       file_name: moonli
   - if: osx and arm64
     then:
       url: ${{ base }}/moonli-${{ tag }}.repl.darwin.arm64.bin
-      sha256: 360ab3f07489b8f9e19bafa2d64f9d581fa74935994dd3ef9d483e61c67b7608
+      sha256: 7a3c20803da4ed04885d41907918083fb21ba49f8cf08ccd434bcb89ce64a34d
       file_name: moonli
   - if: win and x86_64
     then:
       url: ${{ base }}/moonli-${{ tag }}.repl.windows.x86_64.exe
-      sha256: b5e1ac7b27149e4ce5cf5477ad5ac15f827305404ea3b4b173b927f32c5323e4
+      sha256: 98a7327392bf6f5144f074959a454992200f440fda0739f2430f2b01dbc7ba39
       file_name: moonli
 
 build:
