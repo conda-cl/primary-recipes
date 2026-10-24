@@ -1,14 +1,14 @@
 package:
   name: cl-isocline
-  version: "0.0.0.2026.10.11"
+  version: "0.0.0.2026.10.17"
 
 source:
   git: https://github.com/digikar99/cl-isocline
-  rev: 287ae820cf437d0d754bef236f392270f13c4d2b
+  rev: 8441af41a145a192aa3bfa945698fd18397dc364
   submodules: false
 
 build:
-  number: 1
+  number: 0
   script: build.sh
 
 requirements:
