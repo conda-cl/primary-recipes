@@ -8,7 +8,6 @@ version = "0.1.0"
 [tasks]
 
 [dependencies]
-"ruamel.yaml" = ">=0.19.1,<0.20"
 sbcl = ">=2.6.9,<3"
 cl-ppcre = ">=2.1.2,<3"
 alexandria = ">=0.0.0.2026.5.12,<0.0.0.2027"
