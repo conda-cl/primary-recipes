@@ -1,13 +1,14 @@
 package:
   name: yason
-  version: "0.0.0.2025.03.23"
+  version: "0.0.0.2026.10.17"
 
 source:
   git: https://github.com/phmarek/yason
-  rev: 0c84b29a32c284f6b4be6f8587ff89b5702a6fda
+  rev: ea16bc5c5ad099322bffc77686f6e9a67e68a6c1
   submodules: false
 
 build:
+  number: 0
   noarch: generic
   script:
     - DEST="$PREFIX/common-lisp/yason"

@@ -1,13 +1,14 @@
 package:
   name: cl-autoload
-  version: "0.0.0.2026.10.07"
+  version: "0.0.0.2026.10.21"
 
 source:
   git: https://github.com/melisgl/autoload
-  rev: 98e6958511f5cd7e0bb222e822adf46702b4b028
+  rev: 46ddc44c13d97db6480677562e72cac93a01e02b
   submodules: false
 
 build:
+  number: 0
   noarch: generic
   script: build.sh
 
