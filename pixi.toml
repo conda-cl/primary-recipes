@@ -1,0 +1,15 @@
+[workspace]
+authors = ["digikar99 <digikar@proton.me>"]
+channels = ["conda-forge", "https://prefix.dev/common-lisp/common-lisp"]
+name = "pixi-digikar-common-lisp"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+"ruamel.yaml" = ">=0.19.1,<0.20"
+sbcl = ">=2.6.9,<3"
+cl-ppcre = ">=2.1.2,<3"
+alexandria = ">=0.0.0.2026.5.12,<0.0.0.2027"
+let-plus = ">=0.0.0.2018.3.7,<0.0.0.2019"

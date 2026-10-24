@@ -33,7 +33,7 @@ First install [pixi](https://pixi.prefix.dev/latest/installation/). Then -
 
 3. Add common lisp prefix.dev channel
 
-pixi workspace channel add --prepend https://prefix.dev/conda-forge https://prefix.dev/common-lisp/common-lisp
+        pixi workspace channel add --prepend https://prefix.dev/conda-forge https://prefix.dev/common-lisp/common-lisp
 
 
 4. Install a common lisp implementation and some libraries
@@ -121,6 +121,7 @@ Once I have your recipe, I can publish the recipe using `publish.sh` or `cross-p
 
 Existing recipes can be updated using:
 
+    pixi install
     update-recipe.sh <package-name>
 
 This more-or-less preserves the structure, but the version handling is still buggy.
