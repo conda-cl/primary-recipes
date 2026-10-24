@@ -4,10 +4,11 @@ package:
 
 source:
   git: https://github.com/rudolfochrist/cl-change-case
-  rev: 368ce53e1792941bd802cc93f5a04e4a4a4fef2b
+  rev: adaced7ff8f5445e914861d3bfba53e52e817535
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script:
     - DEST="$PREFIX/common-lisp/cl-change-case"

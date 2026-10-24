@@ -4,10 +4,11 @@ package:
 
 source:
   git: https://github.com/spwhitton/anaphora
-  rev: bcf0f7485eec39415be1b2ec6ca31cf04a8ab5c5
+  rev: bb654f815ef4b675e7dec2cf2c091ce4806d3b12
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script: build.sh
 

@@ -4,10 +4,11 @@ package:
 
 source:
   git: https://github.com/sharplispers/parse-number
-  rev: cb9e48758a51ddf3296b56c41ce0006617b00916
+  rev: ca70f7120309eb42bf173ab8764c560aac30e9fc
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script: build.sh
 

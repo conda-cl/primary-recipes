@@ -4,10 +4,11 @@ package:
 
 source:
   git: https://github.com/lispci/fiveam
-  rev: 3ba1300a9dd6bafdaef2af76d261d73bdf7e4bf0
+  rev: 458c62a10358d2a17a5d7ac6c3935d1697eb29a2
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script: build.sh
 

@@ -4,10 +4,11 @@ package:
 
 source:
   git: https://github.com/sharplispers/split-sequence
-  rev: e1b91281e13e7e1490fdcaf7e8aeda04759ec3b7
+  rev: b9ab94ed1b6e5f62f7605bfa70236b3ca9ed453b
   submodules: false
 
 build:
+  number: 1
   noarch: generic
   script: build.sh
 
