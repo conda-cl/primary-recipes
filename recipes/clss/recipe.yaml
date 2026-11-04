@@ -1,0 +1,48 @@
+package:
+  name: clss
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/CLSS
+  rev: cd5f603e8207ec23c147c5cfda636ef8273a7525
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/clss"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-array-utils
+    - cl-plump
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "clss")'
+          --eval '(asdf:test-system "clss")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://codeberg.org/shinmera/CLSS
+  documentation: https://shinmera.com/docs/clss
+  license: Zlib
+  summary: CSS Like Simple Selectors. A Common Lisp DOM tree search engine based on CSS selectors.
+  description: |
+    CLSS is a DOM traversal engine based on CSS selectors. It makes use of the [Plump-DOM](https://shinmera.github.io/plump/) and is used by [lQuery](https://shinmera.github.io/lquery/).
+
+    Using a standard CSS selector you can retrieve a vector of nodes from the DOM:
+
+    ```lisp
+    (clss:select "img" (plump:parse "<div><p>A beautiful image: <img src="//example.com/image.png" alt="image" /></p></div>"))
+    ```
+
+    See the [documentation](https://shinmera.com/docs/clss) for more details.

@@ -1,0 +1,47 @@
+package:
+  name: quri
+  version: "0.0.0.2025.10.18"
+
+source:
+  git: https://github.com/fukamachi/quri
+  rev: 903c8a317bbdd66536a5bf25133e738efd9c7eaf
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/quri"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-babel
+    - cl-idna
+    - cl-utilities
+    - alexandria
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "quri")'
+          --eval '(asdf:test-system "quri")'
+    requirements:
+      run:
+        - sbcl
+        - cl-prove
+
+about:
+  repository: https://github.com/fukamachi/quri
+  documentation: https://github.com/fukamachi/quri/blob/master/README.markdown
+  license: BSD-3-Clause
+  summary: Yet another URI library for Common Lisp
+  description: |
+    **QURI** (pronounced "Q-ree") is yet another URI library for Common Lisp. It is intended to be a replacement of [PURI](http://puri.kpe.io/).
+
+    It aims at implementing [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986). Behaviour that deviates from it should be considered a bug; please report.
+
+    See the [documentation](https://github.com/fukamachi/quri/blob/master/README.markdown) for more details.

@@ -1,0 +1,60 @@
+package:
+  name: proc-parse
+  version: "0.0.0.2019.08.09"
+
+source:
+  git: https://github.com/fukamachi/proc-parse
+  rev: 3afe2b76f42f481f44a0a495256f7abeb69cef27
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/proc-parse"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-babel
+    - alexandria
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "proc-parse")'
+          --eval '(asdf:test-system "proc-parse")'
+    requirements:
+      run:
+        - sbcl
+        - cl-prove
+
+about:
+  repository: https://github.com/fukamachi/proc-parse
+  documentation: https://github.com/fukamachi/proc-parse/blob/master/README.markdown
+  license: BSD-2-Clause
+  summary: Procedural vector parser for Common Lisp
+  description: |
+    This is a string/octets parser library for Common Lisp with speed and readability in mind. Unlike other libraries, the code is not a pattern-matching-like, but a char-by-char procedural parser.
+
+    Usage:
+
+    ```lisp
+    (defun parse-url-scheme (data &key (start 0) end)
+      "Return a URL scheme of DATA as a string."
+      (declare (optimize (speed 3) (safety 0) (debug 0)))
+      (block nil
+        (with-vector-parsing (data :start start :end end)
+          (match-i-case
+           ("http:" (return "http"))
+           ("https:" (return "https"))
+           (otherwise (unless (standard-alpha-char-p (current))
+                        (return nil))
+                      (bind (scheme (skip* (not #\:)))
+                        (return scheme)))))))
+    ```
+
+    See the [documentation](https://github.com/fukamachi/proc-parse/blob/master/README.markdown) for more details.

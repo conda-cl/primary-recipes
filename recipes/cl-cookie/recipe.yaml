@@ -1,0 +1,45 @@
+package:
+  name: cl-cookie
+  version: "0.0.0.2026.04.06"
+
+source:
+  git: https://github.com/fukamachi/cl-cookie
+  rev: 355f9c13b3e6c61cb994bb1b03f34ba7ff26b165
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-cookie"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - alexandria
+    - local-time
+    - proc-parse
+    - quri
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "cl-cookie")'
+          --eval '(asdf:test-system "cl-cookie")'
+    requirements:
+      run:
+        - sbcl
+        - cl-rove
+
+about:
+  repository: https://github.com/fukamachi/cl-cookie
+  documentation: https://github.com/fukamachi/cl-cookie/blob/master/README.markdown
+  license: BSD-2-Clause
+  summary: HTTP cookie manager for Common Lisp
+  description: |
+    HTTP cookie manager for Common Lisp.
+
+    See the [documentation](https://github.com/fukamachi/cl-cookie/blob/master/README.markdown) for more details.

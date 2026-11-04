@@ -1,0 +1,53 @@
+package:
+  name: cl-utilities
+  version: "0.0.0.2008.05.03"
+
+source:
+  git: https://gitlab.common-lisp.net/cl-utilities/cl-utilities.git
+  rev: dce2d2f6387091ea90357a130fa6d13a6776884b
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-utilities"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --load "$PREFIX/common-lisp/cl-utilities/test.lisp"
+          --eval "(5am:run! 'cl-utilities-tests::cl-utilities-suite)"
+    requirements:
+      run:
+        - sbcl
+        - fiveam
+
+about:
+  repository: https://gitlab.common-lisp.net/cl-utilities/cl-utilities
+  homepage: https://cl-utilities.common-lisp.dev
+  documentation: https://cl-utilities.common-lisp.dev/doc/
+  license: Unlicense
+  summary: A collection of semi-standard utilities for Common Lisp
+  description: |
+    Everybody writes some utilities because they're not part of the standard but they're so broadly useful. This results in a lot of wheel reinvention, and most reinventions are not as good as they should be. The cl-utilities project is an actively maintained collection of some of these utilities, with high-quality public-domain implementations and decent documentation.
+
+    ## Table of contents:
+
+    -   [SPLIT-SEQUENCE, SPLIT-SEQUENCE-IF, SPLIT-SEQUENCE-IF-NOT](https://cl-utilities.common-lisp.dev/doc/split-sequence.html). Used for splitting sequences.
+    -   [EXTREMUM, EXTREMA, N-MOST-EXTREME](https://cl-utilities.common-lisp.dev/doc/extremum.html): Finding extreme values in sequences based on user-defined criteria.
+    -   [READ-DELIMITED](https://cl-utilities.common-lisp.dev/doc/read-delimited.html) reads from a sequence delimited somehow, in a somewhat inconvenient but hopefully efficient way.
+    -   [EXPT-MOD](https://cl-utilities.common-lisp.dev/doc/expt-mod.html), an interface for calculating (mod (expt n e) m) efficiently across implementations.
+    -   [WITH-UNIQUE-NAMES, née WITH-GENSYMS](https://cl-utilities.common-lisp.dev/doc/with-unique-names.html). A classic macro-writing macro for preventing variable capture.
+    -   [COLLECTING, WITH-COLLECTORS](https://cl-utilities.common-lisp.dev/doc/collecting.html). Some macros for clearly and efficiently collecting items into lists.
+    -   [ONCE-ONLY](https://cl-utilities.common-lisp.dev/doc/once-only.html), a classic macro-writing macro for preventing multiple evaluation.
+    -   [ROTATE-BYTE](https://cl-utilities.common-lisp.dev/doc/rotate-byte.html) rotates bits in a byte
+    -   [COPY-ARRAY](https://cl-utilities.common-lisp.dev/doc/copy-array.html) shallow copies arrays.
+    -   [COMPOSE](https://cl-utilities.common-lisp.dev/doc/compose.html). Composes functions.

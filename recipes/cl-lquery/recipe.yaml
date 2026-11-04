@@ -1,0 +1,43 @@
+package:
+  name: cl-lquery
+  version: "0.0.0.2025.08.21"
+
+source:
+  git: https://codeberg.org/shinmera/lquery
+  rev: 08c9cb6c2b169bf71d4444bc80e87e5b19f8499c
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/usocket"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-array-utils
+    - cl-plump
+    - form-fiddle
+    - clss
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "lquery")'
+          --eval '(asdf:test-system "lquery")'
+    requirements:
+      run:
+        - fiveam
+        - sbcl
+
+about:
+  repository: https://codeberg.org/shinmera/lquery
+  documentation: https://shinmera.com/docs/lquery
+  license: Zlib
+  summary: A Common Lisp library to allow jQuery-like HTML/DOM manipulation.
+  description: |
+    lQuery is a DOM manipulation library written in Common Lisp, inspired by and based on the [jQuery](http://jquery.com/) syntax and functions. It uses [Plump](http://shinmera.github.io/plump) and [CLSS](http://shinmera.github.io/CLSS/) as DOM and selector engines. The main idea behind lQuery is to provide a simple interface for crawling and modifying HTML sites, as well as to allow for an alternative approach to templating.
