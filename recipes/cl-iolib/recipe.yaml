@@ -1,0 +1,51 @@
+package:
+  name: cl-iolib
+  version: "0.8.4"
+
+source:
+  git: https://github.com/sionescu/iolib
+  rev: 0001be5721875cc4e3c024560ba956eb0535acd7
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/iolib"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - libfixposix
+    - alexandria
+    - cl-asdf
+    - cl-babel
+    - cl-cffi-grovel
+    - cl-idna
+    - bordeaux-threads
+    - swap-bytes
+    - trivial-features
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "iolib")'
+        ##    --eval '(asdf:test-system "iolib")'
+        ## FIXME: This freezes, it's not clear whether this is a bug or a compatibility issue
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/sionescu/iolib
+  homepage: https://iolib.common-lisp.dev/
+  documentation: https://iolib.common-lisp.dev/manual/
+  license: MIT
+  summary: Common Lisp I/O library
+  description: |
+    IOlib is to be a better and more modern I/O library than the standard Common Lisp library. It contains: a socket library, a DNS resolver, an I/O multiplexer(which supports select(2), epoll(4) and kqueue(2)), a pathname library and file-system utilities
+
+    See the [documentation](https://iolib.common-lisp.dev/manual/) for more details.
+

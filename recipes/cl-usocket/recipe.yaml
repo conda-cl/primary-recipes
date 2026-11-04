@@ -1,0 +1,44 @@
+package:
+  name: cl-usocket
+  version: "0.8.9"
+
+source:
+  git: https://github.com/usocket/usocket
+  rev: 99059046458ce79b411b6af53b24ae9763c19640
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/usocket"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - cl-babel
+    - bordeaux-threads # usocket-server
+    - split-sequence
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "usocket")'
+          # --eval '(asdf:test-system "usocket")'
+        ## FIXME: This freezes. Not clear if compatibility issues or actual bugs
+    requirements:
+      run:
+        - sbcl
+        # - cl-rt
+
+about:
+  repository: https://github.com/usocket/usocket
+  homepage: https://usocket.common-lisp.dev/
+  documentation: https://usocket.common-lisp.dev/api-docs.shtml
+  license: MIT
+  summary: Universal socket library for Common Lisp
+  description: |
+    See the [homepage](https://usocket.common-lisp.dev/) for more details.

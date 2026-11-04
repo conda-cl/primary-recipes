@@ -1,0 +1,59 @@
+package:
+  name: uax-15
+  version: "0.0.0.2024.01.27"
+
+source:
+  git: https://github.com/sabracrolleton/uax-15
+  rev: 2226aa32584550aa7b772cb59236eab14ac4b6d8
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/uax-15"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - split-sequence
+    - cl-ppcre
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "uax-15")'
+          --eval '(asdf:test-system "uax-15")'
+    requirements:
+      run:
+        - sbcl
+        - parachute
+
+about:
+  repository: https://github.com/sabracrolleton/uax-15
+  documentation: https://github.com/sabracrolleton/uax-15/blob/master/README.md
+  license: MIT
+  summary: Common lisp implementation of unicode normalization functions
+  description: |
+    It has one major exported function:
+
+      -   (normalize (str unicode-normalization-method))
+
+    The currently supported normalization methods are :nfc :nfkc :nfd :nfkd
+
+    Normalization example with reference to relevant xkcd [https://www.xkcd.com/936/](https://www.xkcd.com/936/)
+
+    ```lisp
+    (normalize "正しい馬バッテリーステープル" :nfkc)
+    "正しい馬バッテリーステープル"
+
+    (normalize "الحصان الصحيح البطارية التيلة" :nfkc)
+    "الحصان الصحيح البطارية التيلة"
+
+    (normalize "اstáplacha ceart ceallraí capall" :nfkc)
+    "اstáplacha ceart ceallraí capall"
+    ```
+    

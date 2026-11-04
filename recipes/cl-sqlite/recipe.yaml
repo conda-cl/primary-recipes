@@ -1,0 +1,76 @@
+package:
+  name: cl-sqlite
+  version: "0.0.0.2019.08.02"
+
+source:
+  git: https://github.com/dmitryvk/cl-sqlite.git
+  rev: be2fcc193f98e3d5bdc85958a806d612cc48740c
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-sqlite"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - sqlite
+    - cl-asdf
+    - cl-cffi
+    - iterate
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "sqlite")'
+          --eval '(asdf:test-system "sqlite")'
+    requirements:
+      run:
+        - sbcl
+        - fiveam
+        - bordeaux-threads
+
+about:
+  repository: https://github.com/TeMPOraL/cl-sqlite
+  documentation: https://cl-sqlite.common-lisp.dev/
+  license: Unlicense
+  summary: CL-SQLITE package is a Common Lisp interface to the SQLite embedded relational database engine.
+  description: |
+    Two functions and a macro are used to manage connections to the database:
+
+      -   Function [connect](https://cl-sqlite.common-lisp.dev/#connect) connects to the database
+      -   Function [disconnect](https://cl-sqlite.common-lisp.dev/#disconnect) disconnects from the database
+      -   Macro [with-open-database](https://cl-sqlite.common-lisp.dev/#with-open-database) opens the database and ensures that it is properly closed after the code is run
+
+      To make queries to the database the following functions are provided:
+
+        -   [execute-non-query](https://cl-sqlite.common-lisp.dev/#execute-non-query) ([execute-non-query/named](https://cl-sqlite.common-lisp.dev/#execute-non-query/named)) executes the query and returns nothing
+        -   [execute-single](https://cl-sqlite.common-lisp.dev/#execute-single) ([execute-single/named](https://cl-sqlite.common-lisp.dev/#execute-single/named)) returns the first column of the first row of the result
+        -   [execute-one-row-m-v](https://cl-sqlite.common-lisp.dev/#execute-one-row-m-v) ([execute-one-row-m-v/named](https://cl-sqlite.common-lisp.dev/#execute-one-row-m-v/named)) returns the first row of the result as multiple values
+        -   [execute-to-list](https://cl-sqlite.common-lisp.dev/#execute-to-list) ([execute-to-list/named](https://cl-sqlite.common-lisp.dev/#execute-to-list/named)) returns all rows as the list of lists
+
+      Macro [with-transaction](https://cl-sqlite.common-lisp.dev/#with-transaction) is used to execute code within transaction.
+
+      Support for [ITERATE](http://common-lisp.net/project/iterate/) is provided. Use the following clause:
+
+          > (for (_vars_) in-sqlite-query _sql_ on-database _db_ &optional with-parameters (_&rest parameters_))
+
+    This clause will bind _vars_ (a list of variables) to the values of the columns of query.
+
+    Additionally, it is possible to use the prepared statements API of sqlite. Create the prepared statement with [prepare-statement](https://cl-sqlite.common-lisp.dev/#prepare-statement), bind its parameters with [bind-parameter](https://cl-sqlite.common-lisp.dev/#bind-parameter), step through it with [step-statement](https://cl-sqlite.common-lisp.dev/#step-statement), retrieve the results with [statement-column-value](https://cl-sqlite.common-lisp.dev/#statement-column-value), and finally reset it to be used again with [reset-statement](https://cl-sqlite.common-lisp.dev/#reset-statement) or dispose of it with [finalize-statement](https://cl-sqlite.common-lisp.dev/#finalize-statement).
+
+    Positional and named parameters in queries are supported. Positional parameters are denoted by question mark in SQL code, and named parameters are denoted by prefixing color (:), at sign (@) or dollar sign ($) before parameter name.
+
+    Following types are supported:
+
+      -   Integer. Integers are stored as 64-bit integers.
+      -   Float. Stored as double. Single-float, double-float and rational may be passed as a parameter, and double-float will be returned.
+      -   String. Stored as an UTF-8 string.
+      -   Vector of bytes. Stored as a blob.
+      -   Null. Passed as NIL to and from database.
+
+    See the [documentation](https://cl-sqlite.common-lisp.dev/) for more information. 

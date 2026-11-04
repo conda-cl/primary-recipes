@@ -1,0 +1,63 @@
+context:
+  name: libfixposix
+  version: "0.5.1"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  git: https://github.com/sionescu/libfixposix
+  rev: 66bda012a7afb232877e315c91e21d6ddaffbdab
+
+build:
+  number: 0
+  skip:
+    - win
+  script:
+    - autoreconf -i -f
+    - mkdir build
+    - cd build
+    - ../configure --prefix="$PREFIX"
+    - make -j${CPU_COUNT}
+    - make check
+    - make install
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - make
+    - autoconf
+    - automake
+    - libtool
+    - m4
+    - pkg-config
+  host:
+    # Only needed by the test suite (`make check`).
+    - check
+  run_exports:
+    - ${{ pin_subpackage(name, upper_bound="x.x") }}
+
+tests:
+  - package_contents:
+      lib:
+        - fixposix
+      include:
+        - lfp.h
+      files:
+        - lib/pkgconfig/libfixposix.pc
+  - requirements:
+      run:
+        - pkg-config
+    script:
+      - pkg-config --exact-version=${{ version }} libfixposix
+
+about:
+  repository: https://github.com/sionescu/libfixposix
+  documentation: https://github.com/sionescu/libfixposix/blob/master/README.md
+  license: BSL-1.0
+  summary: Thin wrapper over POSIX syscalls.
+  description: |
+    libfixposix offers replacements for parts of POSIX whose behaviour is
+    inconsistent across *NIX flavours. It is used by IOLib and other
+    Common Lisp projects.

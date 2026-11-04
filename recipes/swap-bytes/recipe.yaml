@@ -1,0 +1,39 @@
+package:
+  name: swap-bytes
+  version: "1.2"
+
+source:
+  git: https://github.com/sionescu/swap-bytes
+  rev: 4f1f90284a0d73e931aeca0f0ee1d7884572fd34
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/swap-bytes"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - trivial-features
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "swap-bytes")'
+          --eval '(asdf:test-system "swap-bytes")'
+    requirements:
+      run:
+        - sbcl
+        - fiveam
+
+about:
+  repository: https://github.com/sionescu/swap-bytes
+  license: MIT
+  summary: Efficient endianness conversion for SBCL (Common Lisp)
+  description: |
+    A library for changing endianness of unsigned integers of length 1/2/4/8. Very useful in implementing various network protocols and file formats.

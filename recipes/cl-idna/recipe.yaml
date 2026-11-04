@@ -1,0 +1,53 @@
+package:
+  name: cl-idna
+  version: "0.2.2.2026.09.08"
+
+source:
+  git: https://github.com/antifuchs/idna
+  rev: a9ca49fb9a9c75dc27e431c052d5ef0dde44586e
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/idna"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - split-sequence
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "idna")'
+          --eval '(asdf:test-system "idna")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/antifuchs/idna
+  license: MIT
+  summary: International Domain Name functions for Common Lisp.
+  description: |
+    Encoding strings as IDNA:
+
+    ```lisp
+    (idna:to-ascii "中央大学.tw")
+    ;; => "xn--fiq80yua78t.tw"
+
+    (idna:to-ascii "müller.example.com")
+    ;; => "xn--mller-kva.example.com"
+    ```
+
+    Decoding strings from IDNA notation to unicode text:
+
+    ```lisp
+    (idna:to-unicode "xn--fiq80yua78t.tw")
+    ;; => "中央大学.tw"
+    ```

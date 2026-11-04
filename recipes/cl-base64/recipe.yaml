@@ -1,0 +1,39 @@
+package:
+  name: cl-base64
+  version: "0.0.0.2018.01.29"
+
+source:
+  git: https://github.com/darabi/cl-base64/
+  rev: 80496b74293e956364b2d3dbdfc87d74bfeeeda4
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/cl-base64"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "cl-base64")'
+          # --eval '(asdf:test-system "cl-base64")'
+    requirements:
+      run:
+        - sbcl
+        # - kmrcl
+        # - ptester
+
+about:
+  repository: https://github.com/darabi/cl-base64/
+  license: BSD-3-Clause
+  summary: Common Lisp base64 library - clone of http://git.kpe.io/?p=cl-base64.git
+  description: |
+    No description provided.

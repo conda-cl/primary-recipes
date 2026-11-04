@@ -1,0 +1,37 @@
+package:
+  name: trivial-octet-streams
+  version: "0.0.0.2026.10.12"
+
+source:
+  git: https://github.com/sharplispers/trivial-octet-streams
+  rev: 422a54c65d92ed40be39a47d65c1e46e1258fffd
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/trivial-octet-streams"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "trivial-octet-streams")'
+          --eval '(asdf:test-system "trivial-octet-streams")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/sharplispers/trivial-octet-streams
+  license: BSD-3-Clause
+  summary: A Common Lisp library for octet input and output streams analogous to string streams
+  description: |
+    TRIVIAL-OCTET-STREAMS is a library to provide analogues to MAKE-STRING-{INPUT,OUTPUT}-STREAM. 
