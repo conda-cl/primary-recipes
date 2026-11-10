@@ -1,0 +1,45 @@
+package:
+  name: chunga
+  version: "0.0.0.2025.08.14"
+
+source:
+  git: https://github.com/edicl/chunga/
+  rev: 1310e96cc3c09c829ff673806f3b476ef4d8482b
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/chunga"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - trivial-gray-streams
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "chunga")'
+          --eval '(asdf:test-system "chunga")'
+    requirements:
+      run:
+        - sbcl
+
+about:
+  repository: https://github.com/edicl/chunga/
+  documentation: https://edicl.github.io/chunga/
+  license: BSD-2-Clause
+  summary: Portable chunked streams for Common Lisp.
+  description: |
+    Chunga implements streams capable of chunked encoding on demand as defined in RFC 2616. For an example of how these streams can be used see [Drakma](https://edicl.github.io/drakma/).
+
+    The library needs a Common Lisp implementation that supports [_Gray streams_](http://www.nhplace.com/kent/CL/Issues/stream-definition-by-user.html) and relies on David Lichteblau's [trivial-gray-streams](http://www.cliki.net/trivial-gray-streams) to offer portability between different Lisps.
+
+    Chunga is currently not optimized towards performance - it is rather intended to be easy to use and (if possible) to behave correctly.
+
+    See the [documentation](https://edicl.github.io/chunga/) for more information.

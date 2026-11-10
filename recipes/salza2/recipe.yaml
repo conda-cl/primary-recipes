@@ -1,0 +1,44 @@
+package:
+  name: salza2
+  version: "0.0.0.2021.10.19"
+
+source:
+  git: https://github.com/xach/salza2
+  rev: e91a42f1ee31b9a86948ba9f05fb4e965acfad68
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/salza2"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+    - trivial-gray-streams
+
+tests:
+  - script:
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "salza2")'
+          --eval '(asdf:test-system "salza2")'
+    requirements:
+      run:
+        - sbcl
+        - parachute
+        - flexi-streams
+        - chipz
+
+about:
+  repository: https://github.com/xach/salza2
+  documentation: https://xach.com/lisp/salza2/
+  license: BSD-2-Clause
+  summary: ZLIB compression in Common Lisp
+  description: |
+    Salza2 is a Common Lisp library for creating compressed data in the ZLIB, DEFLATE, or GZIP data formats, described in [RFC 1950](http://ietf.org/rfc/rfc1950.txt), [RFC 1951](http://ietf.org/rfc/rfc1951.txt), and [RFC 1952](http://ietf.org/rfc/rfc1952.txt), respectively. It does not use any external libraries for compression. It does not yet support decompression.
+
+    See the [documentation](https://xach.com/lisp/salza2/) for more details.

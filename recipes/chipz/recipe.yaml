@@ -1,0 +1,48 @@
+package:
+  name: chipz
+  version: "0.0.0.2026.08.21"
+
+source:
+  git: https://github.com/sharplispers/chipz
+  rev: 4ce0bc5c85ea01a56a5d95472cdf8b113633f694
+  submodules: false
+
+build:
+  noarch: generic
+  script:
+    - DEST="$PREFIX/common-lisp/chipz"
+    - mkdir -p "$DEST"
+    - cp -r . "$DEST/"
+    - rm -rf "$DEST/.git"
+
+requirements:
+  run:
+    - cl-asdf
+
+tests:
+  - script:
+      - mkdir test-files
+      - seq 1 200000 > test-files/numbers.uncompressed
+      - head -c 100000 /dev/urandom > test-files/random.uncompressed
+      - export TESTDIR="$PWD/test-files/"
+      - sbcl --no-userinit --non-interactive
+          --eval '(require :asdf)'
+          --eval '(asdf:load-system "chipz")'
+          --load "$PREFIX/common-lisp/chipz/tests.lisp"
+          --eval '(chipz-tests:compress-test-files (uiop:getenv "TESTDIR"))'
+          --eval '(chipz-tests:run-all-tests (uiop:getenv "TESTDIR"))'
+    requirements:
+      run:
+        - sbcl
+        - bzip2
+        - salza2
+
+about:
+  repository: https://github.com/sharplispers/chipz
+  documentation: http://www.method-combination.net/lisp/chipz/
+  license: BSD-3-Clause
+  summary: A Common Lisp library for decompressing deflate, zlib, gzip, and bzip2 data.
+  description: |
+    Chipz is a library for decompressing DEFLATE and BZIP2 data. DEFLATE data, defined in [RFC1951](http://www.ietf.org/rfc/rfc1951.txt), forms the core of popular compression formats such as zlib ([RFC 1950](http://www.ietf.org/rfc/rfc1950.txt)) and gzip ([RFC 1952](http://www.ietf.org/rfc/rfc1952.txt)). As such, Chipz also provides for decompressing data in those formats as well. BZIP2 is the format used by the popular compression tool [bzip2](http://www.bzip.org/).
+
+    See the [documentation](http://www.method-combination.net/lisp/chipz/) for more details.
