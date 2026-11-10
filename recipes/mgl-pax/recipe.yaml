@@ -1,10 +1,10 @@
 package:
   name: mgl-pax
-  version: "0.0.0.2026.10.21"
+  version: "0.0.0.2026.11.09"
 
 source:
   git: https://github.com/melisgl/mgl-pax
-  rev: ccc3f6c620214f7073f5faff040d3e5c62f24c70
+  rev: 7ed66c6e815922dc9fefbe104f43e66c7ec1a14d
   submodules: false
 
 build:

@@ -1,10 +1,10 @@
 package:
   name: closer-mop
-  version: "0.0.0.2026.09.27"
+  version: "0.0.0.2026.11.01"
 
 source:
   git: https://codeberg.org/pcostanza/closer-mop.git
-  rev: 7e1ef6ce92b54cd9d4572e43bab01577d2e3f4dd
+  rev: 04f89c12b4a327ddf556648721c97633241abe34
   submodules: false
 
 build:
