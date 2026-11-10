@@ -4,7 +4,7 @@ package:
 
 source:
   git: https://github.com/sionescu/iolib
-  rev: 0001be5721875cc4e3c024560ba956eb0535acd7
+  rev: 48ae8efa1ad8c8192e462c782b526e0f321ee141
   submodules: false
 
 build:
@@ -26,6 +26,7 @@ requirements:
     - bordeaux-threads
     - swap-bytes
     - trivial-features
+    - local-time
 
 tests:
   - script:
